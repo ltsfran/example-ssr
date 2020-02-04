@@ -1,43 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import { routes } from './config/route';
 
 const render = process.env.NODE_SSR ? 'hydrate' : 'render';
 
-console.log(process.env.PATH_STATIC, 'PATH_STATIC');
-
-const Counter = () => {
-  const [ count, setCount ] = useState(0);
-
-  useEffect(() => {
-    document.title = 'Count' + count;
-    return() => {
-      document.title = 'Count' + count;
-    };
-  });
-
-  const handleClick = () => {
-    setCount(count + 1);
-
-    console.log('hola mundo');
-  };
-
-  return(
-    <button onClick={handleClick}>Click</button>
-  );
-};
-
-export const App: React.FC = () => (
-  <>
-    <div>How are you world?</div>
-    <Counter />
-  </>
+ReactDOM[render](
+  <Router>{ renderRoutes(routes) }</Router>,
+  document.getElementById('root')
 );
-
-App.displayName = 'App';
-
-if (typeof document !== 'undefined') {
-  ReactDOM[render](
-    <App />,
-    document.getElementById('root')
-  );
-}

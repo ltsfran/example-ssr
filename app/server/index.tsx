@@ -2,7 +2,9 @@ import fs from 'fs';
 import express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { App } from '@app/src/index';
+import { StaticRouter as Router } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import { routes } from '@app/src/config/route';
 
 const scripts = JSON.parse(fs.readFileSync(__dirname + '/stats.json', 'utf8'));
 const port = 80;
@@ -34,11 +36,26 @@ const templateFn = ({ body, scripts }) => `
   </html>
 `;
 
+enum HTTP_STATUS {
+  OK = 200,
+  NOT_FOUND = 404
+}
+
 app.get('*', async (req, res) => {
   try {
+    const context = {
+      status: HTTP_STATUS.OK
+    };
     const body = renderToString(
-      <App />
+      <Router location={req.path} context={context}>
+        {renderRoutes(routes)}
+      </Router>
     );
+
+    if (context.status === HTTP_STATUS.NOT_FOUND) {
+      res.status(HTTP_STATUS.NOT_FOUND);
+    }
+    
     res.send(templateFn({
       body,
       scripts
