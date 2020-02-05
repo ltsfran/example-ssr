@@ -1,0 +1,5 @@
+const ROOT = 'viewThree/search/items';
+
+export const FETCH_ITEMS_REQUEST = `${ROOT}/FETCH_ITEMS_REQUEST`;
+export const FETCH_ITEMS_FAILURE = `${ROOT}/FETCH_ITEMS_FAILURE`;
+export const FETCH_ITEMS_SUCCESS = `${ROOT}/FETCH_ITEMS_SUCCESS`;

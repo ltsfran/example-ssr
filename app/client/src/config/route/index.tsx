@@ -2,6 +2,8 @@ import React from 'react';
 import { App } from '@app/src/views';
 import { ViewOne } from '@app/src/views/viewOne';
 import { ViewTwo } from '@app/src/views/viewTwo';
+import { ViewThree } from '@app/src/views/ViewThree';
+import { ViewThreeDescription } from '@app/src/views/ViewThreeDescription';
 
 interface Props {
   staticContext: any
@@ -26,6 +28,16 @@ const routes = [
       {
         path: '/two',
         component: ViewTwo,
+        exact: true
+      },
+      {
+        path: '/three',
+        component: ViewThree,
+        exact: true
+      },
+      {
+        path: '/three/:id',
+        component: ViewThreeDescription,
         exact: true
       },
       {
